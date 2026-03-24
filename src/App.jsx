@@ -60,7 +60,7 @@ function useRotatingText(words, interval = 3000) {
 function CountdownCard({ value, label, delay }) {
   return (
     <div
-      className={`animate-scale-in ${delay} glass-strong rounded-2xl p-4 sm:p-5 min-w-[72px] sm:min-w-[96px] text-center group hover:shadow-lg hover:shadow-[#4E0EFF]/8 hover:-translate-y-1 transition-all duration-500`}
+      className={`animate-scale-in ${delay} glass-strong rounded-2xl p-3 sm:p-5 sm:min-w-[96px] text-center group hover:shadow-lg hover:shadow-[#4E0EFF]/8 hover:-translate-y-1 transition-all duration-500`}
     >
       <div className="font-display text-3xl sm:text-5xl font-bold bg-gradient-to-b from-[#4E0EFF] to-[#7C4DFF] bg-clip-text text-transparent tracking-tight transition-transform duration-300 group-hover:scale-110">
         {String(value).padStart(2, "0")}
@@ -173,14 +173,14 @@ function App() {
               </span>
               <span
                 key={activeWord}
-                className="text-xs font-semibold text-[#4E0EFF] ticker-item"
+                className="text-xs font-semibold text-[#4E0EFF] ticker-item inline-block min-w-[100px] text-left"
               >
                 {activeWord}
               </span>
             </div>
           </div>
 
-          <h1 className="animate-fade-up delay-300 font-display text-[2.6rem] sm:text-6xl lg:text-[5.2rem] font-bold leading-[1.06] tracking-tight max-w-4xl">
+          <h1 className="animate-fade-up delay-300 font-display text-3xl sm:text-6xl lg:text-[5.2rem] font-bold leading-[1.08] tracking-tight max-w-4xl">
             <span className="text-gray-800">Market Place for</span>
             <br />
             <span className="bg-gradient-to-r from-[#4E0EFF] via-[#6B2FFF] to-[#9B6FFF] bg-clip-text text-transparent animate-gradient-x">
@@ -202,7 +202,7 @@ function App() {
           </div>
 
           {/* Countdown */}
-          <div className="flex gap-3 sm:gap-4 mt-12 sm:mt-14">
+          <div className="grid grid-cols-4 gap-2 sm:gap-4 mt-12 sm:mt-14 w-full max-w-sm sm:max-w-none sm:w-auto sm:flex">
             <CountdownCard
               value={timeLeft.days}
               label="Days"
@@ -236,7 +236,7 @@ function App() {
               </div>
             ) : (
               <form onSubmit={handleSubmit}>
-                <div className="glass-strong rounded-2xl p-1.5 flex items-center hover:shadow-lg hover:shadow-[#4E0EFF]/6 transition-shadow duration-500">
+                <div className="glass-strong rounded-2xl p-1.5 flex flex-col sm:flex-row items-stretch sm:items-center gap-1.5 sm:gap-0 hover:shadow-lg hover:shadow-[#4E0EFF]/6 transition-shadow duration-500">
                   <input
                     type="email"
                     value={email}
@@ -487,7 +487,7 @@ function App() {
               </p>
             ) : (
               <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                   <input
                     type="email"
                     value={email}
