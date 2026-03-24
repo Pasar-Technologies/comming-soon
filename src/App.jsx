@@ -95,7 +95,7 @@ function App() {
       <div className="relative z-10 flex flex-col items-center min-h-screen px-6 py-12 sm:py-16">
         {/* Nav */}
         <nav className="w-full max-w-5xl flex items-center justify-between mb-16 sm:mb-24 animate-fade-up delay-100">
-          <img src="/logo.png" alt="Pasar" className="h-10 sm:h-12" />
+          <img src={`${import.meta.env.BASE_URL}logo.png`} alt="Pasar" className="h-10 sm:h-12" />
           <div className="glass rounded-full px-4 py-1.5">
             <span className="text-[11px] sm:text-xs font-semibold tracking-widest text-[#4E0EFF]">
               COMING SOON
