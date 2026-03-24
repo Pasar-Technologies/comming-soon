@@ -62,6 +62,60 @@ function useMouseParallax(strength = 0.02) {
   return offset;
 }
 
+// Smooth scroll progress
+function useScrollProgress() {
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    const handler = () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(h > 0 ? window.scrollY / h : 0);
+    };
+    window.addEventListener("scroll", handler, { passive: true });
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
+  return progress;
+}
+
+// Sticky nav detection
+function useScrolled(threshold = 20) {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const handler = () => setScrolled(window.scrollY > threshold);
+    window.addEventListener("scroll", handler, { passive: true });
+    return () => window.removeEventListener("scroll", handler);
+  }, [threshold]);
+  return scrolled;
+}
+
+// Animated counter
+function useAnimatedCount(target, duration = 2000) {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && !started.current) {
+        started.current = true;
+        const start = performance.now();
+        const step = (now) => {
+          const p = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - p, 3); // ease out cubic
+          setCount(Math.floor(eased * target));
+          if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      }
+    }, { threshold: 0.5 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [target, duration]);
+
+  return { count, ref };
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
    COMPONENTS
    ═══════════════════════════════════════════════════════════════════════════ */
@@ -149,6 +203,47 @@ function SectionLabel({ text }) {
   return <p className="text-xs font-bold tracking-[0.2em] text-[#4E0EFF]/60 uppercase text-center mb-2">{text}</p>;
 }
 
+function StatCard({ value, suffix, label }) {
+  const { count, ref } = useAnimatedCount(value, 2000);
+  return (
+    <div ref={ref} className="text-center">
+      <div className="font-display text-3xl sm:text-4xl font-bold bg-gradient-to-b from-[#4E0EFF] to-[#7C4DFF] bg-clip-text text-transparent">
+        {count}{suffix}
+      </div>
+      <div className="text-xs text-gray-400 mt-1 font-medium">{label}</div>
+    </div>
+  );
+}
+
+function Marquee({ items }) {
+  return (
+    <div className="overflow-hidden relative py-4">
+      <div className="flex gap-4 animate-marquee whitespace-nowrap">
+        {[...items, ...items].map((item, i) => (
+          <span key={i} className="glass rounded-full px-4 py-2 text-xs font-medium text-gray-500 shrink-0">
+            {item}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function CursorGlow() {
+  const [pos, setPos] = useState({ x: -200, y: -200 });
+  useEffect(() => {
+    const handler = (e) => setPos({ x: e.clientX, y: e.clientY });
+    window.addEventListener("mousemove", handler);
+    return () => window.removeEventListener("mousemove", handler);
+  }, []);
+  return (
+    <div
+      className="fixed pointer-events-none z-50 w-[300px] h-[300px] rounded-full bg-[#4E0EFF]/[0.04] blur-[80px] transition-transform duration-100 hidden sm:block"
+      style={{ transform: `translate(${pos.x - 150}px, ${pos.y - 150}px)` }}
+    />
+  );
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
    PARTICLES
    ═══════════════════════════════════════════════════════════════════════════ */
@@ -200,9 +295,12 @@ function App() {
   const timeLeft = useCountdown("2025-09-01T00:00:00");
   const activeWord = useRotatingText(SEARCH_WORDS, 2500);
   const mouse = useMouseParallax(0.015);
+  const scrollProgress = useScrollProgress();
+  const navScrolled = useScrolled(40);
 
   const adRef = useReveal();
   const featRef = useReveal();
+  const statsRef = useReveal();
   const vaultRef = useReveal();
   const ctaRef = useReveal();
 
@@ -213,6 +311,14 @@ function App() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#FAFAFF] text-gray-900">
+
+      {/* Cursor glow */}
+      <CursorGlow />
+
+      {/* Scroll progress bar */}
+      <div className="fixed top-0 left-0 right-0 z-[60] h-[3px] bg-transparent">
+        <div className="h-full bg-gradient-to-r from-[#4E0EFF] to-[#7C4DFF] transition-none" style={{ width: `${scrollProgress * 100}%` }} />
+      </div>
 
       {/* ── Animated Background ── */}
       <div className="absolute inset-0 overflow-hidden">
@@ -256,7 +362,7 @@ function App() {
       <div className="relative z-10">
 
         {/* ── Nav ── */}
-        <nav className="anim-hero-in d-0 max-w-6xl mx-auto flex items-center justify-between px-6 py-5 sm:py-6">
+        <nav className={`anim-hero-in d-0 sticky top-0 z-50 max-w-6xl mx-auto flex items-center justify-between px-6 transition-all duration-500 ${navScrolled ? "py-3 sm:py-4" : "py-5 sm:py-6"}`} style={navScrolled ? { backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", background: "rgba(250,250,255,0.8)" } : {}}>
           <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="Pasar" className="h-14 sm:h-20 hover:scale-105 transition-transform duration-300" />
           <div className="glass-strong rounded-full px-4 py-1.5 hover:shadow-md hover:scale-105 transition-all duration-300">
             <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] bg-gradient-to-r from-[#4E0EFF] to-[#7C4DFF] bg-clip-text text-transparent">
@@ -328,6 +434,24 @@ function App() {
                 </div>
               </form>
             )}
+          </div>
+        </section>
+
+        {/* ── Marquee ── */}
+        <div className="max-w-6xl mx-auto px-6 py-8 overflow-hidden">
+          <Marquee items={[
+            '🔧 Plumber', '📱 Used iPhone', '🛢️ Cooking oil bulk', '🚗 Driver',
+            '⚡ Electrician', '🛋️ Second-hand sofa', '🍳 Caterer', '🪚 Carpenter',
+            '🏠 House painter', '📦 Wholesale rice', '🧹 Maid service', '🚚 Movers',
+          ]} />
+        </div>
+
+        {/* ── Stats ── */}
+        <section ref={statsRef} className="reveal max-w-3xl mx-auto px-6 py-12 sm:py-16">
+          <div className="glass-strong rounded-3xl p-8 sm:p-10 grid grid-cols-3 gap-6">
+            <StatCard value={500} suffix="+" label="Early signups" />
+            <StatCard value={3} suffix="" label="Ad verticals" />
+            <StatCard value={11} suffix="" label="Languages" />
           </div>
         </section>
 
