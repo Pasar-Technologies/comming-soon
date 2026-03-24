@@ -28,8 +28,13 @@ function useReveal() {
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { el.classList.add("visible"); obs.unobserve(el); } },
-      { threshold: 0.15 }
+      ([e]) => {
+        if (e.isIntersecting) {
+          el.classList.add("visible");
+          obs.unobserve(el);
+        }
+      },
+      { threshold: 0.15 },
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -41,7 +46,10 @@ function useReveal() {
 function useRotatingText(words, interval = 3000) {
   const [index, setIndex] = useState(0);
   useEffect(() => {
-    const t = setInterval(() => setIndex((i) => (i + 1) % words.length), interval);
+    const t = setInterval(
+      () => setIndex((i) => (i + 1) % words.length),
+      interval,
+    );
     return () => clearInterval(t);
   }, [words.length, interval]);
   return words[index];
@@ -51,7 +59,9 @@ function useRotatingText(words, interval = 3000) {
 
 function CountdownCard({ value, label, delay }) {
   return (
-    <div className={`animate-scale-in ${delay} glass-strong rounded-2xl p-4 sm:p-5 min-w-[72px] sm:min-w-[96px] text-center group hover:shadow-lg hover:shadow-[#4E0EFF]/8 hover:-translate-y-1 transition-all duration-500`}>
+    <div
+      className={`animate-scale-in ${delay} glass-strong rounded-2xl p-4 sm:p-5 min-w-[72px] sm:min-w-[96px] text-center group hover:shadow-lg hover:shadow-[#4E0EFF]/8 hover:-translate-y-1 transition-all duration-500`}
+    >
       <div className="font-display text-3xl sm:text-5xl font-bold bg-gradient-to-b from-[#4E0EFF] to-[#7C4DFF] bg-clip-text text-transparent tracking-tight transition-transform duration-300 group-hover:scale-110">
         {String(value).padStart(2, "0")}
       </div>
@@ -71,14 +81,18 @@ function FeatureCard({ icon, title, desc }) {
       <h3 className="text-sm sm:text-[15px] font-semibold text-gray-800 mb-1.5 group-hover:text-[#4E0EFF] transition-colors duration-300">
         {title}
       </h3>
-      <p className="text-[12px] sm:text-[13px] text-gray-400 leading-relaxed">{desc}</p>
+      <p className="text-[12px] sm:text-[13px] text-gray-400 leading-relaxed">
+        {desc}
+      </p>
     </div>
   );
 }
 
 function SearchExample({ text, delay }) {
   return (
-    <span className={`animate-fade-up ${delay} inline-block glass-strong rounded-full px-3.5 py-1.5 text-[11px] sm:text-xs font-medium text-gray-500 hover:text-[#4E0EFF] hover:border-[#4E0EFF]/15 transition-all duration-300 cursor-default`}>
+    <span
+      className={`animate-fade-up ${delay} inline-block glass-strong rounded-full px-3.5 py-1.5 text-[11px] sm:text-xs font-medium text-gray-500 hover:text-[#4E0EFF] hover:border-[#4E0EFF]/15 transition-all duration-300 cursor-default`}
+    >
       {text}
     </span>
   );
@@ -86,7 +100,15 @@ function SearchExample({ text, delay }) {
 
 // ─── App ─────────────────────────────────────────────────────────────────────
 
-const SEARCH_WORDS = ["plumber", "used iPhone", "cooking oil bulk", "driver", "electrician", "second-hand sofa", "caterer"];
+const SEARCH_WORDS = [
+  "plumber",
+  "used iPhone",
+  "cooking oil bulk",
+  "driver",
+  "electrician",
+  "second-hand sofa",
+  "caterer",
+];
 
 function App() {
   const [email, setEmail] = useState("");
@@ -101,7 +123,10 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (email.trim()) { setSubmitted(true); setEmail(""); }
+    if (email.trim()) {
+      setSubmitted(true);
+      setEmail("");
+    }
   };
 
   return (
@@ -115,7 +140,8 @@ function App() {
         <div
           className="absolute inset-0 opacity-25"
           style={{
-            backgroundImage: "radial-gradient(circle, #4E0EFF06 1.2px, transparent 1.2px)",
+            backgroundImage:
+              "radial-gradient(circle, #4E0EFF06 1.2px, transparent 1.2px)",
             backgroundSize: "32px 32px",
           }}
         />
@@ -124,7 +150,11 @@ function App() {
       <div className="relative z-10">
         {/* ── Nav ── */}
         <nav className="animate-fade-in delay-0 max-w-6xl mx-auto flex items-center justify-between px-6 py-5 sm:py-6">
-          <img src={`${import.meta.env.BASE_URL}logo.png`} alt="Pasar" className="h-9 sm:h-11" />
+          <img
+            src={`${import.meta.env.BASE_URL}logo.png`}
+            alt="Pasar"
+            className="h-9 sm:h-11"
+          />
           <div className="glass-strong rounded-full px-4 py-1.5 hover:shadow-md transition-shadow duration-300">
             <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] bg-gradient-to-r from-[#4E0EFF] to-[#7C4DFF] bg-clip-text text-transparent">
               COMING SOON
@@ -138,7 +168,9 @@ function App() {
           <div className="animate-fade-up delay-200 mb-6">
             <div className="glass-strong rounded-full px-5 py-2 inline-flex items-center gap-2">
               <span className="text-[13px]">🔍</span>
-              <span className="text-xs text-gray-400">People are searching for</span>
+              <span className="text-xs text-gray-400">
+                People are searching for
+              </span>
               <span
                 key={activeWord}
                 className="text-xs font-semibold text-[#4E0EFF] ticker-item"
@@ -149,16 +181,16 @@ function App() {
           </div>
 
           <h1 className="animate-fade-up delay-300 font-display text-[2.6rem] sm:text-6xl lg:text-[5.2rem] font-bold leading-[1.06] tracking-tight max-w-4xl">
-            <span className="text-gray-800">Your Local</span>
+            <span className="text-gray-800">Market Place for</span>
             <br />
             <span className="bg-gradient-to-r from-[#4E0EFF] via-[#6B2FFF] to-[#9B6FFF] bg-clip-text text-transparent animate-gradient-x">
-              AI Marketplace
+              Seamless Connect
             </span>
           </h1>
 
           <p className="animate-fade-up delay-500 text-sm sm:text-base lg:text-lg text-gray-400 max-w-xl mt-5 sm:mt-7 leading-relaxed">
-            Search for a plumber, sell your old iPhone, find cooking oil in bulk,
-            or list your services — all powered by AI, all hyperlocal.
+            Search for a plumber, sell your old iPhone, find cooking oil in
+            bulk, or list your services — all powered by AI, all hyperlocal.
           </p>
 
           {/* Search examples */}
@@ -171,10 +203,26 @@ function App() {
 
           {/* Countdown */}
           <div className="flex gap-3 sm:gap-4 mt-12 sm:mt-14">
-            <CountdownCard value={timeLeft.days} label="Days" delay="delay-600" />
-            <CountdownCard value={timeLeft.hours} label="Hours" delay="delay-700" />
-            <CountdownCard value={timeLeft.minutes} label="Min" delay="delay-800" />
-            <CountdownCard value={timeLeft.seconds} label="Sec" delay="delay-900" />
+            <CountdownCard
+              value={timeLeft.days}
+              label="Days"
+              delay="delay-600"
+            />
+            <CountdownCard
+              value={timeLeft.hours}
+              label="Hours"
+              delay="delay-700"
+            />
+            <CountdownCard
+              value={timeLeft.minutes}
+              label="Min"
+              delay="delay-800"
+            />
+            <CountdownCard
+              value={timeLeft.seconds}
+              label="Sec"
+              delay="delay-900"
+            />
           </div>
 
           {/* Email */}
@@ -212,43 +260,79 @@ function App() {
         {/* ── 3 Ad Types ── */}
         <section className="max-w-5xl mx-auto px-6 py-16 sm:py-24">
           <div ref={adTypesRef} className="reveal">
-            <p className="text-xs font-bold tracking-[0.2em] text-[#4E0EFF]/60 uppercase text-center mb-2">3 ways to sell</p>
+            <p className="text-xs font-bold tracking-[0.2em] text-[#4E0EFF]/60 uppercase text-center mb-2">
+              3 ways to sell
+            </p>
             <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-4">
               One app, every type of ad
             </h2>
             <p className="text-sm text-gray-400 text-center max-w-md mx-auto mb-12">
-              Whether you offer services, sell second-hand goods, or want to clear stock — Pasar has a vertical for you.
+              Whether you offer services, sell second-hand goods, or want to
+              clear stock — Pasar has a vertical for you.
             </p>
           </div>
 
-          <div ref={useReveal()} className="reveal-stagger grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
+          <div
+            ref={useReveal()}
+            className="reveal-stagger grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5"
+          >
             <div className="reveal-child glass-strong rounded-3xl p-7 sm:p-8 hover:shadow-xl hover:shadow-[#4E0EFF]/6 hover:-translate-y-2 transition-all duration-500 group">
               <div className="text-3xl mb-4">📋</div>
-              <h3 className="font-display text-lg font-bold text-gray-800 mb-2 group-hover:text-[#4E0EFF] transition-colors">Ad Listings</h3>
-              <p className="text-sm text-gray-400 leading-relaxed mb-4">Post services like plumbing, driving, tutoring — or goods you offer locally.</p>
+              <h3 className="font-display text-lg font-bold text-gray-800 mb-2 group-hover:text-[#4E0EFF] transition-colors">
+                Ad Listings
+              </h3>
+              <p className="text-sm text-gray-400 leading-relaxed mb-4">
+                Post services like plumbing, driving, tutoring — or goods you
+                offer locally.
+              </p>
               <div className="flex flex-wrap gap-1.5">
                 {["Services", "Goods", "Daily hire"].map((t) => (
-                  <span key={t} className="text-[10px] font-medium text-[#4E0EFF]/70 bg-[#4E0EFF]/[0.06] rounded-full px-2.5 py-1">{t}</span>
+                  <span
+                    key={t}
+                    className="text-[10px] font-medium text-[#4E0EFF]/70 bg-[#4E0EFF]/[0.06] rounded-full px-2.5 py-1"
+                  >
+                    {t}
+                  </span>
                 ))}
               </div>
             </div>
             <div className="reveal-child glass-strong rounded-3xl p-7 sm:p-8 hover:shadow-xl hover:shadow-[#4E0EFF]/6 hover:-translate-y-2 transition-all duration-500 group">
               <div className="text-3xl mb-4">♻️</div>
-              <h3 className="font-display text-lg font-bold text-gray-800 mb-2 group-hover:text-[#4E0EFF] transition-colors">Pre-owned / Resell</h3>
-              <p className="text-sm text-gray-400 leading-relaxed mb-4">Sell second-hand items — phones, furniture, vehicles — to nearby buyers instantly.</p>
+              <h3 className="font-display text-lg font-bold text-gray-800 mb-2 group-hover:text-[#4E0EFF] transition-colors">
+                Pre-owned / Resell
+              </h3>
+              <p className="text-sm text-gray-400 leading-relaxed mb-4">
+                Sell second-hand items — phones, furniture, vehicles — to nearby
+                buyers instantly.
+              </p>
               <div className="flex flex-wrap gap-1.5">
                 {["Electronics", "Furniture", "Vehicles"].map((t) => (
-                  <span key={t} className="text-[10px] font-medium text-[#4E0EFF]/70 bg-[#4E0EFF]/[0.06] rounded-full px-2.5 py-1">{t}</span>
+                  <span
+                    key={t}
+                    className="text-[10px] font-medium text-[#4E0EFF]/70 bg-[#4E0EFF]/[0.06] rounded-full px-2.5 py-1"
+                  >
+                    {t}
+                  </span>
                 ))}
               </div>
             </div>
             <div className="reveal-child glass-strong rounded-3xl p-7 sm:p-8 hover:shadow-xl hover:shadow-[#4E0EFF]/6 hover:-translate-y-2 transition-all duration-500 group">
               <div className="text-3xl mb-4">📦</div>
-              <h3 className="font-display text-lg font-bold text-gray-800 mb-2 group-hover:text-[#4E0EFF] transition-colors">Stock Clearance</h3>
-              <p className="text-sm text-gray-400 leading-relaxed mb-4">Clear excess inventory at discounted prices — FMCG, electronics, bulk goods.</p>
+              <h3 className="font-display text-lg font-bold text-gray-800 mb-2 group-hover:text-[#4E0EFF] transition-colors">
+                Stock Clearance
+              </h3>
+              <p className="text-sm text-gray-400 leading-relaxed mb-4">
+                Clear excess inventory at discounted prices — FMCG, electronics,
+                bulk goods.
+              </p>
               <div className="flex flex-wrap gap-1.5">
                 {["FMCG", "Wholesale", "Bulk deals"].map((t) => (
-                  <span key={t} className="text-[10px] font-medium text-[#4E0EFF]/70 bg-[#4E0EFF]/[0.06] rounded-full px-2.5 py-1">{t}</span>
+                  <span
+                    key={t}
+                    className="text-[10px] font-medium text-[#4E0EFF]/70 bg-[#4E0EFF]/[0.06] rounded-full px-2.5 py-1"
+                  >
+                    {t}
+                  </span>
                 ))}
               </div>
             </div>
@@ -258,77 +342,149 @@ function App() {
         {/* ── Features ── */}
         <section className="max-w-5xl mx-auto px-6 py-16 sm:py-24">
           <div ref={featuresRef} className="reveal">
-            <p className="text-xs font-bold tracking-[0.2em] text-[#4E0EFF]/60 uppercase text-center mb-2">Packed with power</p>
+            <p className="text-xs font-bold tracking-[0.2em] text-[#4E0EFF]/60 uppercase text-center mb-2">
+              Packed with power
+            </p>
             <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-12">
               Built for how you actually work
             </h2>
           </div>
 
-          <div ref={useReveal()} className="reveal-stagger grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-            <FeatureCard icon="🤖" title="AI Voice Assistant" desc='Say "Hey Sunny" to search, post ads or check warranties hands-free' />
-            <FeatureCard icon="🔍" title="Smart Search" desc="Find anything nearby — drivers, plumbers, bulk cooking oil, used phones" />
-            <FeatureCard icon="📊" title="Ads Monitoring" desc="Track views, calls & engagement on your ads with real-time analytics" />
-            <FeatureCard icon="📍" title="Location Based" desc="Results ranked by distance — always find what's closest to you" />
-            <FeatureCard icon="💼" title="Business Profiles" desc="Build your presence with gallery, reviews & availability schedule" />
-            <FeatureCard icon="💰" title="Wallet & Payments" desc="Seamless in-app payments for ad plans, promotions & features" />
-            <FeatureCard icon="🔔" title="Smart Alerts" desc="Get notified when warranties expire or new matches appear nearby" />
-            <FeatureCard icon="🌐" title="Multilingual" desc="Use the app in Hindi, Kannada, Tamil, Telugu & more Indian languages" />
+          <div
+            ref={useReveal()}
+            className="reveal-stagger grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4"
+          >
+            <FeatureCard
+              icon="🤖"
+              title="AI Voice Assistant"
+              desc='Say "Hey Sunny" to search, post ads or check warranties hands-free'
+            />
+            <FeatureCard
+              icon="🔍"
+              title="Smart Search"
+              desc="Find anything nearby — drivers, plumbers, bulk cooking oil, used phones"
+            />
+            <FeatureCard
+              icon="📊"
+              title="Ads Monitoring"
+              desc="Track views, calls & engagement on your ads with real-time analytics"
+            />
+            <FeatureCard
+              icon="📍"
+              title="Location Based"
+              desc="Results ranked by distance — always find what's closest to you"
+            />
+            <FeatureCard
+              icon="💼"
+              title="Business Profiles"
+              desc="Build your presence with gallery, reviews & availability schedule"
+            />
+            <FeatureCard
+              icon="💰"
+              title="Wallet & Payments"
+              desc="Seamless in-app payments for ad plans, promotions & features"
+            />
+            <FeatureCard
+              icon="🔔"
+              title="Smart Alerts"
+              desc="Get notified when warranties expire or new matches appear nearby"
+            />
+            <FeatureCard
+              icon="🌐"
+              title="Multilingual"
+              desc="Use the app in Hindi, Kannada, Tamil, Telugu & more Indian languages"
+            />
           </div>
         </section>
 
         {/* ── Vaults ── */}
         <section className="max-w-5xl mx-auto px-6 py-16 sm:py-24">
           <div ref={vaultsRef} className="reveal">
-            <p className="text-xs font-bold tracking-[0.2em] text-[#4E0EFF]/60 uppercase text-center mb-2">Beyond marketplace</p>
+            <p className="text-xs font-bold tracking-[0.2em] text-[#4E0EFF]/60 uppercase text-center mb-2">
+              Beyond marketplace
+            </p>
             <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-12">
               Your digital vault for peace of mind
             </h2>
           </div>
 
-          <div ref={useReveal()} className="reveal-stagger grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 max-w-3xl mx-auto">
+          <div
+            ref={useReveal()}
+            className="reveal-stagger grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 max-w-3xl mx-auto"
+          >
             <div className="reveal-child glass-strong rounded-3xl p-7 sm:p-8 hover:shadow-xl hover:shadow-[#4E0EFF]/6 hover:-translate-y-1 transition-all duration-500 group">
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#4E0EFF]/15 to-[#7C4DFF]/15 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-500">🔒</div>
-                <h3 className="font-display text-lg font-bold text-gray-800 group-hover:text-[#4E0EFF] transition-colors">Warranty Vault</h3>
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#4E0EFF]/15 to-[#7C4DFF]/15 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-500">
+                  🔒
+                </div>
+                <h3 className="font-display text-lg font-bold text-gray-800 group-hover:text-[#4E0EFF] transition-colors">
+                  Warranty Vault
+                </h3>
               </div>
               <p className="text-sm text-gray-400 leading-relaxed mb-4">
-                Store all product warranties digitally. Get automatic reminders before they expire. Never lose a warranty receipt again.
+                Store all product warranties digitally. Get automatic reminders
+                before they expire. Never lose a warranty receipt again.
               </p>
               <div className="flex flex-wrap gap-1.5">
-                {["Auto-reminders", "Photo scan", "Expiry tracking"].map((t) => (
-                  <span key={t} className="text-[10px] font-medium text-[#4E0EFF]/70 bg-[#4E0EFF]/[0.06] rounded-full px-2.5 py-1">{t}</span>
-                ))}
+                {["Auto-reminders", "Photo scan", "Expiry tracking"].map(
+                  (t) => (
+                    <span
+                      key={t}
+                      className="text-[10px] font-medium text-[#4E0EFF]/70 bg-[#4E0EFF]/[0.06] rounded-full px-2.5 py-1"
+                    >
+                      {t}
+                    </span>
+                  ),
+                )}
               </div>
             </div>
 
             <div className="reveal-child glass-strong rounded-3xl p-7 sm:p-8 hover:shadow-xl hover:shadow-[#4E0EFF]/6 hover:-translate-y-1 transition-all duration-500 group">
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#4E0EFF]/15 to-[#7C4DFF]/15 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-500">🛡️</div>
-                <h3 className="font-display text-lg font-bold text-gray-800 group-hover:text-[#4E0EFF] transition-colors">Insurance Vault</h3>
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#4E0EFF]/15 to-[#7C4DFF]/15 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-500">
+                  🛡️
+                </div>
+                <h3 className="font-display text-lg font-bold text-gray-800 group-hover:text-[#4E0EFF] transition-colors">
+                  Insurance Vault
+                </h3>
               </div>
               <p className="text-sm text-gray-400 leading-relaxed mb-4">
-                Keep motor, health, gadget & property insurance policies organized. Renewal reminders so you're never unprotected.
+                Keep motor, health, gadget & property insurance policies
+                organized. Renewal reminders so you're never unprotected.
               </p>
               <div className="flex flex-wrap gap-1.5">
-                {["All policy types", "Renewal alerts", "Document storage"].map((t) => (
-                  <span key={t} className="text-[10px] font-medium text-[#4E0EFF]/70 bg-[#4E0EFF]/[0.06] rounded-full px-2.5 py-1">{t}</span>
-                ))}
+                {["All policy types", "Renewal alerts", "Document storage"].map(
+                  (t) => (
+                    <span
+                      key={t}
+                      className="text-[10px] font-medium text-[#4E0EFF]/70 bg-[#4E0EFF]/[0.06] rounded-full px-2.5 py-1"
+                    >
+                      {t}
+                    </span>
+                  ),
+                )}
               </div>
             </div>
           </div>
         </section>
 
         {/* ── Bottom CTA ── */}
-        <section ref={ctaRef} className="reveal max-w-3xl mx-auto px-6 py-16 sm:py-24 text-center">
+        <section
+          ref={ctaRef}
+          className="reveal max-w-3xl mx-auto px-6 py-16 sm:py-24 text-center"
+        >
           <div className="glass-strong rounded-3xl p-8 sm:p-12">
             <h2 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 mb-3">
               Be the first to experience Pasar
             </h2>
             <p className="text-sm text-gray-400 mb-8 max-w-md mx-auto">
-              Join our early access list and get notified the moment we launch. Your local marketplace awaits.
+              Join our early access list and get notified the moment we launch.
+              Your local marketplace awaits.
             </p>
             {submitted ? (
-              <p className="text-sm text-[#4E0EFF] font-semibold">🎉 You're already on the list!</p>
+              <p className="text-sm text-[#4E0EFF] font-semibold">
+                🎉 You're already on the list!
+              </p>
             ) : (
               <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
                 <div className="flex items-center gap-2">
@@ -359,7 +515,11 @@ function App() {
           </p>
           <div className="flex gap-6">
             {["X", "LinkedIn", "Instagram"].map((label) => (
-              <a key={label} href="#" className="text-[11px] text-gray-300 hover:text-[#4E0EFF] transition-colors duration-300 font-medium">
+              <a
+                key={label}
+                href="#"
+                className="text-[11px] text-gray-300 hover:text-[#4E0EFF] transition-colors duration-300 font-medium"
+              >
                 {label}
               </a>
             ))}
