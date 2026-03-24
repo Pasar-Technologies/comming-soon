@@ -115,9 +115,10 @@ function App() {
             </span>
           </h1>
 
-          <p className="animate-fade-up delay-300 text-sm sm:text-base lg:text-lg text-gray-400 max-w-lg mt-5 sm:mt-6 leading-relaxed">
-            Pasar connects local businesses, services & buyers through an
-            AI-powered platform with voice assistant, smart search & more.
+          <p className="animate-fade-up delay-300 text-sm sm:text-base lg:text-lg text-gray-400 max-w-xl mt-5 sm:mt-6 leading-relaxed">
+            Search for a plumber, sell your old iPhone, find cooking oil in bulk,
+            or list your services — Pasar is the AI-powered local marketplace
+            that connects businesses, buyers & service providers in one app.
           </p>
 
           {/* Countdown */}
@@ -160,32 +161,88 @@ function App() {
           </div>
         </div>
 
-        {/* Features Grid */}
-        <div className="w-full max-w-3xl grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-20 sm:mt-28">
-          <FeatureCard
-            icon="🤖"
-            title="AI Voice Assistant"
-            desc="Search, post & manage with just your voice"
-            delay="delay-400"
-          />
-          <FeatureCard
-            icon="📢"
-            title="Ad Listings"
-            desc="Post services, resell items or stock products"
-            delay="delay-500"
-          />
-          <FeatureCard
-            icon="🔒"
-            title="Warranty Vault"
-            desc="Store & track all your warranties digitally"
-            delay="delay-500"
-          />
-          <FeatureCard
-            icon="🛡️"
-            title="Insurance Manager"
-            desc="Keep all your insurance policies in one place"
-            delay="delay-600"
-          />
+        {/* What you can do */}
+        <div className="w-full max-w-4xl mt-20 sm:mt-28">
+          <h2 className="animate-fade-up delay-300 font-display text-xl sm:text-2xl font-bold text-center text-gray-800 mb-3">
+            Everything in one app
+          </h2>
+          <p className="animate-fade-up delay-300 text-xs sm:text-sm text-gray-400 text-center mb-8 sm:mb-10 max-w-md mx-auto">
+            From finding a driver to clearing old stock — search anything, post anything, manage everything.
+          </p>
+
+          {/* 3 Ad Types */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-3 sm:mb-4">
+            <FeatureCard
+              icon="📋"
+              title="Service & Goods Listings"
+              desc="Post ads for services like plumbing, driving, tutoring or goods you offer"
+              delay="delay-300"
+            />
+            <FeatureCard
+              icon="♻️"
+              title="Pre-owned / Resell"
+              desc="Sell second-hand items — phones, furniture, vehicles & more to nearby buyers"
+              delay="delay-400"
+            />
+            <FeatureCard
+              icon="📦"
+              title="Stock Clearance"
+              desc="Clear excess inventory at discounted prices — FMCG, electronics, bulk goods"
+              delay="delay-500"
+            />
+          </div>
+
+          {/* Other features */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+            <FeatureCard
+              icon="🤖"
+              title="AI Voice Assistant"
+              desc='Say "Hey Sunny" to search, post ads or check warranties hands-free'
+              delay="delay-400"
+            />
+            <FeatureCard
+              icon="🔍"
+              title="Smart Search"
+              desc="Find anything nearby — drivers, plumbers, bulk cooking oil, used iPhones"
+              delay="delay-500"
+            />
+            <FeatureCard
+              icon="🔒"
+              title="Warranty Vault"
+              desc="Store all warranties digitally, get alerts before they expire"
+              delay="delay-500"
+            />
+            <FeatureCard
+              icon="🛡️"
+              title="Insurance Vault"
+              desc="Keep motor, health & gadget insurance policies organized in one place"
+              delay="delay-600"
+            />
+            <FeatureCard
+              icon="📊"
+              title="Ads Monitoring"
+              desc="Track views, calls & engagement on your ads with real-time analytics"
+              delay="delay-500"
+            />
+            <FeatureCard
+              icon="📍"
+              title="Location Based"
+              desc="Results ranked by distance — find what you need closest to you"
+              delay="delay-600"
+            />
+            <FeatureCard
+              icon="💼"
+              title="Business Profiles"
+              desc="Build your business presence with gallery, reviews & availability schedule"
+              delay="delay-600"
+            />
+            <FeatureCard
+              icon="💰"
+              title="Wallet & Payments"
+              desc="Seamless in-app payments for ad plans, promotions & premium features"
+              delay="delay-700"
+            />
+          </div>
         </div>
 
         {/* Footer */}
