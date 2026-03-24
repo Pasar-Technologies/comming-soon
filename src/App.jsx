@@ -513,6 +513,12 @@ function App() {
           <p className="text-[11px] text-gray-300 font-medium tracking-wider uppercase">
             &copy; 2025 Pasar Technologies
           </p>
+          <a
+            href="mailto:pasartechnologies@gmail.com"
+            className="text-[11px] text-gray-400 hover:text-[#4E0EFF] transition-colors duration-300 font-medium"
+          >
+            pasartechnologies@gmail.com
+          </a>
           <div className="flex gap-6">
             {["X", "LinkedIn", "Instagram"].map((label) => (
               <a
