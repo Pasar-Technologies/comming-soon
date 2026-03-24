@@ -257,7 +257,7 @@ function App() {
 
         {/* ── Nav ── */}
         <nav className="anim-hero-in d-0 max-w-6xl mx-auto flex items-center justify-between px-6 py-5 sm:py-6">
-          <img src={`${import.meta.env.BASE_URL}logo.png`} alt="Pasar" className="h-9 sm:h-11 hover:scale-105 transition-transform duration-300" />
+          <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="Pasar" className="h-9 sm:h-11 hover:scale-105 transition-transform duration-300" />
           <div className="glass-strong rounded-full px-4 py-1.5 hover:shadow-md hover:scale-105 transition-all duration-300">
             <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] bg-gradient-to-r from-[#4E0EFF] to-[#7C4DFF] bg-clip-text text-transparent">
               COMING SOON
