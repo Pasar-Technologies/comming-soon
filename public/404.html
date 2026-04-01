@@ -8,23 +8,14 @@
   <script>
     var path = window.location.pathname;
 
-    // Only handle /ad/* deep links
-    if (path.startsWith('/ad/')) {
-      var parts = path.split('/').filter(Boolean);
-      var adType = parts[1] || '';
-      var adId = parts[2] || '';
-      var appUrl = 'pasar://ad/' + adType + '/' + adId;
-
-      var timer = setTimeout(function () {
-        window.location.href = 'https://play.google.com/store/apps/details?id=com.pasar.app';
-      }, 1500);
-
-      window.addEventListener('blur', function () { clearTimeout(timer); });
-      window.location.href = appUrl;
-    } else {
+    if (!path.startsWith('/ad/')) {
       // Not a deep link — redirect to home
       window.location.href = '/';
     }
+    // If it IS a deep link (/ad/*), just show the fallback page.
+    // On Android/iOS with the app installed, the OS intercepts
+    // the https:// URL BEFORE this page ever loads.
+    // If we're here, the app is NOT installed — show Play Store link.
   </script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -45,24 +36,16 @@
       max-width: 400px;
       box-shadow: 0 4px 24px rgba(0,0,0,0.08);
     }
+    .logo { font-size: 48px; margin-bottom: 16px; }
     h1 { font-size: 22px; color: #1a1a1a; margin-bottom: 8px; }
-    p { font-size: 15px; color: #666; margin-bottom: 24px; }
-    .spinner {
-      width: 32px; height: 32px;
-      border: 3px solid #e0e0e0;
-      border-top-color: #6200EE;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin: 0 auto 20px;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    p { font-size: 15px; color: #666; margin-bottom: 24px; line-height: 1.5; }
     .btn {
       display: inline-block;
-      padding: 12px 28px;
+      padding: 14px 32px;
       background: #6200EE;
       color: white;
       text-decoration: none;
-      border-radius: 8px;
+      border-radius: 10px;
       font-weight: 600;
       font-size: 15px;
     }
@@ -71,9 +54,9 @@
 </head>
 <body>
   <div class="card">
-    <div class="spinner"></div>
-    <h1>Opening in Pasar...</h1>
-    <p>If the app doesn't open automatically:</p>
+    <div class="logo">🛒</div>
+    <h1>View this ad on Pasar</h1>
+    <p>Install the Pasar app to view this ad and discover local services near you.</p>
     <a class="btn" href="https://play.google.com/store/apps/details?id=com.pasar.app">
       Get Pasar on Google Play
     </a>
