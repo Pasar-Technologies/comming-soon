@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.pasar.app",
+      "sha256_cert_fingerprints": [
+        "F5:05:CE:6B:FE:91:08:45:D2:2A:C6:5E:CE:E7:96:99:3C:D7:FE:3F:DC:53:66:DF:4A:EA:AA:5A:ED:8F:2C:B9",
+        "B2:53:F3:0C:10:31:3D:88:78:69:6F:A7:7D:CD:4B:F3:F5:47:3B:EE:75:F6:5D:DE:D4:DD:DC:34:49:F1:17:24"
+      ]
+    }
+  }
+]
