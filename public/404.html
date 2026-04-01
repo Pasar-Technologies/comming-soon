@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Ad - Pasar</title>
+  <meta name="description" content="Check out this ad on Pasar - your local marketplace">
+  <script>
+    var path = window.location.pathname;
+
+    // Only handle /ad/* deep links
+    if (path.startsWith('/ad/')) {
+      var parts = path.split('/').filter(Boolean);
+      var adType = parts[1] || '';
+      var adId = parts[2] || '';
+      var appUrl = 'pasar://ad/' + adType + '/' + adId;
+
+      var timer = setTimeout(function () {
+        window.location.href = 'https://play.google.com/store/apps/details?id=com.pasar.app';
+      }, 1500);
+
+      window.addEventListener('blur', function () { clearTimeout(timer); });
+      window.location.href = appUrl;
+    } else {
+      // Not a deep link — redirect to home
+      window.location.href = '/';
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 40px 30px;
+      text-align: center;
+      max-width: 400px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    h1 { font-size: 22px; color: #1a1a1a; margin-bottom: 8px; }
+    p { font-size: 15px; color: #666; margin-bottom: 24px; }
+    .spinner {
+      width: 32px; height: 32px;
+      border: 3px solid #e0e0e0;
+      border-top-color: #6200EE;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 20px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .btn {
+      display: inline-block;
+      padding: 12px 28px;
+      background: #6200EE;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+    }
+    .btn:hover { background: #5000CC; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="spinner"></div>
+    <h1>Opening in Pasar...</h1>
+    <p>If the app doesn't open automatically:</p>
+    <a class="btn" href="https://play.google.com/store/apps/details?id=com.pasar.app">
+      Get Pasar on Google Play
+    </a>
+  </div>
+</body>
+</html>
